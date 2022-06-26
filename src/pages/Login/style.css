@@ -1,0 +1,27 @@
+div.login-auth {
+	width:100%;
+	height:100vh;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+div.login-auth div.container {
+	border:1px solid #e8e8e8;
+	padding:20px;
+}
+
+div.login-auth div.container a {
+	border:1px solid #e8e8e8;
+}
+
+div.login-auth span.error-message {
+	color:red;
+	font-size:13px;
+}
+
+img.logo-login {
+	width:40%;
+	margin-left:30%;
+	margin-top:-90px;
+}

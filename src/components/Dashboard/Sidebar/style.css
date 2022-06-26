@@ -1,0 +1,94 @@
+div.sidebar {
+	height:100vh;
+	width:300px;
+	background-color:transparent;
+	transition:0.5s;
+}
+
+div.sidebar > div {
+	float:left;
+	width:100%;
+}
+
+div.sidebar div.header-sidebar {
+	height:100px;
+	flex-wrap:wrap;
+	display:flex;
+	align-items:center;
+	align-content:center;
+	margin-bottom:-25px;
+}
+
+div.sidebar div.header-sidebar a {
+	float:left;
+	width:100%;
+	padding:15px;
+	padding-left:22px;
+	transition:0.3s;
+	font-size:20px;
+	display:flex;
+	align-items:center;
+	align-content:center;
+}
+
+div.sidebar div.header-sidebar a img.logo-sidebar {
+	margin-right:12px;
+	width:180px;
+	transition:0.3s;
+}
+
+div.sidebar div.header-sidebar a img.logotipo {
+	display:none;
+	margin-left:-5px;
+	width:50px;
+	transition:0.3s;
+}
+
+div.sidebar div.area-links a {
+	float:left;
+	width:100%;
+	padding:15px 10px;
+	color:#666666;
+	transition:0.3s;
+	display:flex;
+	border-radius:0px 15px 15px 0px;
+}
+
+div.sidebar div.area-links a:hover {
+	background-color:#e8e8e8;
+	color:#e64548;
+	cursor:pointer;
+	transition:0.3s;
+}
+
+div.sidebar div.area-links a svg {margin:0px 10px;}
+
+.activeClicked {
+	background-color:#e64548;
+	color:#ffffff !important;
+}
+.activeClicked:hover {
+	background-color:#e64548 !important;
+	color:#ffffff !important;
+}
+
+div.btn-toggle-sidebar button {
+	float:left;
+	width:100%;
+	padding:15px 10px;
+	color:#666666;
+	transition:0.3s;
+	border:none;
+	background-color:transparent;
+	display:flex;
+	border-radius:0px 15px 15px 0px;
+}
+
+div.btn-toggle-sidebar button:hover {
+	background-color:#e8e8e8;
+	color:#e64548;
+	cursor:pointer;
+	transition:0.3s;
+}
+
+div.btn-toggle-sidebar button svg {margin:0px 10px;}

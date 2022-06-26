@@ -1,0 +1,8 @@
+ul.pagination {padding:0px !important; list-style:none; display:flex;}
+ul.pagination li {margin-right:2px !important;}
+ul.pagination li button {padding:2px 10px; border-radius:0px; transition:0.3s;}
+ul.pagination li button:hover:not(.active) {transform:translateY(-3px); transition:0.3s;}
+ul.pagination li button.active {cursor:default; border:1px solid #999999;}
+ul.pagination li button.active:focus {outline:none;}
+ul.pagination li:first-child {margin-right:5px !important;}
+ul.pagination li:last-child {margin-left:3px !important;}

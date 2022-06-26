@@ -1,0 +1,99 @@
+html, body {background-color:#f1faee !important; height:100% !important; width:100% !important;}
+ul {padding:0px !important;}
+a {text-decoration:none !important;}
+
+::-webkit-scrollbar {width:7px;}
+::-webkit-scrollbar-track-piece {background-color:#efefef;}
+::-webkit-scrollbar-thumb {background-color:#666666;}
+
+
+div.area-dashboard {float:left; width:100%; display:flex;}
+
+.bg-red {background-color:#e63946 !important; color:#ffffff !important; border:none !important;}
+.bg-red:hover {background-color:#c40211 !important; transition:0.3s;}
+.bg-gray {background-color:#999999 !important; color:#ffffff !important; border:none !important;}
+.bg-gray:hover {background-color:#696969 !important; transition:0.3s;}
+.bg-green {background-color:#2a9d8f !important; color:#ffffff !important; border:none !important;}
+.bg-green:hover {background-color:#017a6c !important; transition:0.3s;}
+.bg-yellow {background-color:#e9c46a !important; color:#ffffff !important; border:none !important;}
+.bg-yellow:hover {background-color:#e3b544 !important; transition:0.3s;}
+.bg-orange {background-color:#f4a261 !important; color:#ffffff !important; border:none !important;}
+.bg-orange:hover {background-color:#fa7811 !important; transition:0.3s;}
+.bg-orange-strong {background-color:#e76f51 !important; color:#ffffff !important; border:none !important;}
+.bg-orange-strong:hover {background-color:#e64219 !important; transition:0.3s;}
+.bg-green-night {background-color:#264653 !important; color:#ffffff !important; border:none !important;}
+.bg-green-night:hover {background-color:#042736 !important; transition:0.3s;}
+
+
+div.group-buttons {width:auto; padding:0px;}
+div.group-buttons a {width:auto; border-radius:0px; margin-right:5px; transition:0.3s; margin:0px !important; border-radius:0px !important;}
+/*div.group-buttons a:hover {transition:0.3s; background-color:#000000 !important;}*/
+div.group-buttons .first {border-radius:5px 0px 0px 5px !important;}
+div.group-buttons .last {border-radius:0px 5px 5px 0px !important;}
+div.group-buttons button {margin:0px !important; border-radius:0px !important;}
+/*div.group-buttons button:hover {transition:0.3s; background-color:#000000 !important;}*/
+
+span.req-span {color:red;}
+
+div.area-crud {
+	width:100%;
+	height:85vh;
+	padding:40px;
+	padding-top:10px;
+	overflow-y:auto;
+}
+
+div.showItemsSelect {float:left; max-height:200px; overflow-y:auto;}
+
+div.area-actions-crud {float:left; padding:0px; width:100%; margin-bottom:25px; margin-left:0px; display:flex; justify-content:space-between; align-items:center; align-content:center;}
+
+div.area-actions-crud form {height:auto; width:auto; display:flex; align-items:flex-start; padding:0px; margin-bottom:0px;}
+div.area-actions-crud form select.form-select {width:150px; padding:6px 10px !important; height:auto !important;}
+div.area-actions-crud form div.input-search {width:250px !important; margin-left:5px;}
+div.area-actions-crud form div.input-search input {width:200px !important;}
+div.area-actions-crud form button {padding:5px 10px; border-radius:0px 5px 5px 0px; border:1px solid #17202a; width:auto !important; transition:0.3s}
+/*div.area-actions-crud form button:hover {background-color:#000000; transition:0.3s}*/
+
+
+h2.title-endpoint {float:left; width:100%; margin-bottom:20px;} 
+
+div.area-crud table {width:100% !important;}
+div.area-crud table thead {border:0px !important;}
+div.area-crud table thead th {border:none !important; background-color:#e64548; color:#fdfdfe; padding:15px 13px;}
+div.area-crud table thead th:first-child {border-radius:15px 0 0 0 !important;}
+div.area-crud table thead th:last-child {border-radius:0 15px 0 0 !important;}
+div.area-crud table tbody {border-top:transparent !important;}
+div.area-crud table tbody tr td {vertical-align:middle !important;}
+div.area-crud table tbody tr td.actions-2{width:110px;}
+div.area-crud table tbody tr td.actions-3{width:155px;}
+div.area-crud table tbody tr td.actions-4{width:200px;}
+div.area-crud table tbody tr td.actions-5{width:250px;}
+div.area-crud table button {padding:10px 13px; background-color:#17202a; transition:0.3s; border-radius:0px;}
+div.area-crud table button:hover {background-color:#000000; transition:0.3s}
+div.area-crud table button svg {margin-top:-5px;}
+div.area-crud table a {padding:10px 13px; background-color:#17202a; transition:0.3s; border-radius:0px;}
+div.area-crud table a:hover {background-color:#000000; transition:0.3s}
+div.area-crud table a svg {margin-top:-5px;}
+div.area-crud table button.button-remove-tag {float:left; margin:3px; font-size:13px; border-radius:5px; padding:3px 8px; display:flex; align-items:center; align-content:center;}
+div.area-crud table button.button-remove-tag i {margin-left:5px; cursor:pointer;}
+
+form.form-register span.error-message {
+	color:red;
+	font-size:13px;
+}
+
+form.form-register button[type="submit"] {padding:7px 40px; margin-top:10px;}
+
+div.area-page-dashboard {width:100%; height:88vh; background-color:; padding:40px; overflow-y:auto; display: flex; flex-direction: column;}
+div.area-page-dashboard div.box-number {background-color:#ffffff; margin:10px; border-radius:5px; border:1px solid #e8e8e8;}
+div.area-page-dashboard div.box-number:nth-child(1) {border-bottom:3px solid #ef476f;}
+div.area-page-dashboard div.box-number:nth-child(2) {border-bottom:3px solid #ffd166;}
+div.area-page-dashboard div.box-number:nth-child(3) {border-bottom:3px solid #06d6a0;}
+div.area-page-dashboard div.box-number:nth-child(4) {border-bottom:3px solid #118ab2;}
+div.area-page-dashboard div.box-number span {float:left; width:100%; text-align:center; font-size:40px;}
+div.area-page-dashboard div.box-number label {float:left; width:100%; text-align:center;}
+div.area-page-dashboard div.box-list {background-color:#ffffff; border-radius:5px; border:1px solid #e8e8e8; margin:10px; padding:10px 15px;}
+div.area-page-dashboard div.box-list ul {padding:0px; margin:0px; width:100%; height:100%; list-style:none;}
+
+
+div.area-profile {width:100%; height:88vh; background-color:; padding:40px; overflow-y:auto;}

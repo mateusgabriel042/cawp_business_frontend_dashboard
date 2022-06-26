@@ -1,0 +1,31 @@
+header {
+	height:15vh;
+	padding:0px 40px;
+	display:flex;
+	flex-wrap:wrap;
+	align-content:center;
+	align-items:center;
+	
+}
+
+header nav {
+	float:left;
+	width:100%;
+	height:auto;
+	padding:15px 20px;
+	display:flex;
+	flex-wrap:wrap;
+	border-radius:15px;
+	justify-content:space-between;
+	align-items:center;
+	align-content:center;
+	background-color:#e64548;
+}
+
+header nav > div {display:flex; flex-wrap:wrap; align-items:center; align-content:center;}
+header nav > div a {color:#fdfdfe;}
+header nav > div a:hover {color:#17202a;}
+header nav > div button:hover {color:#17202a !important;}
+
+header nav label.welcome {margin-right:40px; color:#ffffff;}
+header nav button {padding:0px !important; background-color:transparent !important; border:none !important;}
