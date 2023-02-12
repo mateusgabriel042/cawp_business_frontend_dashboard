@@ -7,16 +7,22 @@ import { useHistory } from "react-router-dom";
 
 const Header = () => {
     const history = useHistory();
-    
     const columns = [
-        {value: 'name', label: 'Nome'},
-        {value: 'email', label: 'Email'},
+        {value: 'title', label: 'Titulo'},
+        {value: 'type_residence', label:'Tipo da residencia'},
+        {value: 'type_payment', label:' Tipo de pagamento'},
+        {value: 'city', label:'Cidade'},
+        {value: 'state', label:'Estado/Provincia'},
+        {value: 'neighborhood', label:'Bairro'},
+        {value: 'facebook', label:'Facebook'},
+        {value: 'instagram', label:'Instagram'},
     ];
     const [column, setColumn] = useState(columns[0].value);
-    const [value, setValue] = useState('');
 
-    const endpoint = 'user';
-    const roleEndpoint = 'user';
+    const [value, setValue] = useState('');
+    const system = 'properties';
+    const endpoint = 'house';
+    const roleEndpoint = 'properties-house';
 
     const changeColumn = (ev) => {
         setColumn(ev.target.value);
@@ -29,23 +35,23 @@ const Header = () => {
     const onSubmit = async (event) => {
         event.preventDefault();
         if(value === '')
-            history.push(`/dashboard/${endpoint}/list`);
+            history.push(`/dashboard/${system}/${endpoint}/list`);
         else
-            history.push(`/dashboard/${endpoint}/search/${column}/${value}`);
+            history.push(`/dashboard/${system}/${endpoint}/search/${column}/${value}`);
     }
 
 	return (
 		<>
-			<h2 className="title-endpoint">Usuários</h2>
+			<h2 className="title-endpoint">Casas</h2>
 
             <div className="row area-actions-crud">
                 <div className="group-buttons">
                     <Can resource={roleEndpoint} authority={`${roleEndpoint}-create`}>
-                    	<Link to={`/dashboard/${endpoint}/register`} className="btn bg-red first">Adicionar</Link>
+                    	<Link to={`/dashboard/${system}/${endpoint}/register`} className="btn bg-red first">Adicionar</Link>
                     </Can>
 
                     <Can resource={roleEndpoint} authority={`${roleEndpoint}-view`}>
-                        <Link to={`/dashboard/${endpoint}/list`} className="btn bg-red last">Listar</Link>
+                        <Link to={`/dashboard/${system}/${endpoint}/list`} className="btn bg-red last">Listar</Link>
                     </Can>
                 </div>
 

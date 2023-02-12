@@ -3,16 +3,14 @@ import Header from '../Header/index.jsx';
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import apiService from '../../../../services/api.js';
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Loading from '../../../../components/Loading/index.jsx';
 import { MultiSelect } from "react-multi-select-component";
 import { Can } from "react-access-level";
 import { showNotify, verifyError } from '../../../../services/actionsAppService.jsx';
 
-const RegisterEdit = ({ match, location }) => {
-	const {
-	    params: { id }
-	} = match;
+const RegisterEdit = () => {
+	const { id } = useParams();
 
 	const [endpoint, setEndpoint] = useState('user');
 	const [roleEndpoint, setRoleEndpoint] = useState('user');

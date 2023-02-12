@@ -23,3 +23,7 @@ export const verifyError = (error) => {
 		useHistory.push(`/error-page/${dataError.code}`);
 	}
 }
+
+export const formatMoney = (value, language, currency) => {
+	return (value / 100).toLocaleString(language, { style: 'currency', currency: currency });
+}

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Table, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { BiPencil, BiTrash, BiShowAlt, BiXCircle} from "react-icons/bi";
 import Header from '../Header/index.jsx';
 import apiService from '../../../../services/api.js';
@@ -9,7 +9,7 @@ import Pagination from '../../../../components/Pagination/index.jsx';
 import { Can } from "react-access-level";
 import { showNotify, verifyError } from '../../../../services/actionsAppService.jsx';
 
-const List = ({ match, location }) => {
+const List = () => {
 	const [endpointRegisters, setEndpointRegisters] = useState([]);
 	const [endpoint, setEndpoint] = useState('user');
 	const [roleEndpoint, setRoleEndpoint] = useState('user');
@@ -18,9 +18,8 @@ const List = ({ match, location }) => {
 	const [qtdPages, setQtdPages] = useState(1);
 	const api = apiService.get();
 	let valuePrev = localStorage.getItem('searchValuePrev');
-	const {
-	    params: { column, value }
-	} = match;
+
+	const { column, value } = useParams();
 
 	const list = () => {
 		setLoading(true);

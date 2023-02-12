@@ -43,6 +43,11 @@ div.area-crud {
 	overflow-y:auto;
 }
 
+div.section-crud {
+	width:100%;
+	margin-top:30px;
+}
+
 div.showItemsSelect {float:left; max-height:200px; overflow-y:auto;}
 
 div.area-actions-crud {float:left; padding:0px; width:100%; margin-bottom:25px; margin-left:0px; display:flex; justify-content:space-between; align-items:center; align-content:center;}

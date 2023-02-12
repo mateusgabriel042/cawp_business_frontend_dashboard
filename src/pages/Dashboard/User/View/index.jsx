@@ -5,17 +5,16 @@ import apiService from '../../../../services/api.js';
 import Loading from '../../../../components/Loading/index.jsx';
 import { Can } from "react-access-level";
 import { verifyError } from '../../../../services/actionsAppService.jsx';
+import { useParams } from "react-router-dom";
 
-const View = ({ match, location }) => {
+const View = () => {
 	const api = apiService.get()
 	const [endpoint, setEndpoint] = useState('user');
 	const [roleEndpoint, setRoleEndpoint] = useState('user');
 	const [endpointSelected, setEndpointSelected] = useState([]);
 	const [loading, setLoading] = useState(false);
 
-	const {
-	    params: { id }
-	} = match;
+	const { id } = useParams();
 	
 	const view = () => {
 		setLoading(true);
