@@ -27,3 +27,14 @@ export const verifyError = (error) => {
 export const formatMoney = (value, language, currency) => {
 	return (value / 100).toLocaleString(language, { style: 'currency', currency: currency });
 }
+
+export const convertMoneyStringToFloat = (value) => {
+	let result = '';
+	if(typeof value === "string"){
+		result = value.replace('.', '');
+		result = result.replace(',', '.');
+		return parseFloat(result);
+	}else{
+		return value;
+	}
+}

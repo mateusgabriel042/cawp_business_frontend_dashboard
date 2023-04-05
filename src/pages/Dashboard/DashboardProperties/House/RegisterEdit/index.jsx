@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import HeaderMain from '../../HeaderMain/index.jsx';
 import Header from '../Header/index.jsx';
 import { Button, Form, Row, Col } from 'react-bootstrap';
@@ -8,7 +8,7 @@ import { useHistory, useParams } from "react-router-dom";
 import apiLocations from '../../../../../services/apiLocations.js';
 import Loading from '../../../../../components/Loading/index.jsx';
 import { Can } from "react-access-level";
-import { showNotify, verifyError } from '../../../../../services/actionsAppService.jsx';
+import { showNotify, verifyError, convertMoneyStringToFloat } from '../../../../../services/actionsAppService.jsx';
 import './style.css';
 import { NumericFormat } from 'react-number-format';
 import InputMask from "react-input-mask";
@@ -29,6 +29,18 @@ const RegisterEdit = () => {
 	const { register, handleSubmit, setValue, getValues } = useForm();
 	
 	const onSubmit = data => {
+		data.state = states.find(function(el){
+		    return el.id == data.state_id;/* eslint-disable-line */
+		})?.nome;
+
+		data.city = cities.find(function(el){
+		    return el.id == data.city_id;/* eslint-disable-line */
+		})?.nome;
+
+		data.price = convertMoneyStringToFloat(getValues('price')) * 100;
+		data.iptu_price = convertMoneyStringToFloat(getValues('iptu_price')) * 100;
+		data.condominium_price = convertMoneyStringToFloat(getValues('condominium_price')) * 100;
+		
 		if(id !== undefined)
 			update(data);
 		else
@@ -71,24 +83,24 @@ const RegisterEdit = () => {
 
 	const initEndpoint = () => {
 		setLoading(true);
-		api.get(`api/${system}/${endpoint}/${id}`)
+		return api.get(`api/${system}/${endpoint}/${id}`)
 		.then(resp => {
+
 			const data = resp.data.data.endpointItem;
 			setValue("title", data?.title);
 			setValue("type_residence", data?.type_residence);
 			setValue("type_payment", data?.type_payment);
+			setValue("area", data?.area);
 			setValue("zipcode", data?.zipcode || '');
-			setValue("city_id", data?.city_id);
-			setValue("city", data?.city);
 			setValue("state_id", data?.state_id);
-			setValue("state", data?.state);
+			setValue("city_id", data?.city_id);
 			setValue("street", data?.street);
 			setValue("number", data?.number);
 			setValue("neighborhood", data?.neighborhood);
 			setValue("complement", data?.complement);			
-			setValue("price", data?.price);
-			setValue("iptu_price", data?.iptu_price);
-			setValue("condominium_price", data?.condominium_price);
+			setValue("price", data?.price / 100);
+			setValue("iptu_price", data?.iptu_price / 100);
+			setValue("condominium_price", data?.condominium_price / 100);
 			setValue("condominium_price_include", data?.condominium_price_include);
 			setValue("condominium_iptu_include", data?.condominium_iptu_include);
 			setValue("link_google_maps", data?.link_google_maps);
@@ -108,6 +120,8 @@ const RegisterEdit = () => {
 			setValue("facebook", data?.facebook);
 			setValue("instagram", data?.instagram);
 			setValue("description", data?.description);
+
+			//initCities(data?.city_id);
 
 			setLoading(false);
 		})
@@ -131,38 +145,35 @@ const RegisterEdit = () => {
 		})
 	}
 
-	const initStates = () => {
-	    apiLocations.get('estados')
-		.then((res) => {
-			setStates(res.data);
-		})
-		.catch(error =>{
-			showNotify('error', 'Ops, ocorreu algum erro!');
-			console.log(error);
-		})
+	const initStates = async () => {
+	    return apiLocations.get('estados')
 	}
 
-	const initCities = (idState) => {
-		apiLocations.get(`estados/${idState}/municipios`)
-		.then((res) => {
-			setCities(res.data)
-		})
-		.catch(error =>{
-			showNotify('error', 'Ops, ocorreu algum erro!');
-			console.log(error);
-		})
+	const initCities = async (idState) => {
+		return apiLocations.get(`estados/${idState}/municipios`)
 	}
+
+	
 
 	useEffect(() => {
-		initStates()
-		if(id !== undefined){
-			initEndpoint();
-		}else{
-			document.getElementById('form-register').reset();
-		}
+		initStates().then((res) => {
+			setStates(res.data);
+			if(id !== undefined){
+				initEndpoint().then(() => {
+					initCities(getValues("state_id")).then((resp) => {
+						setCities(resp.data)
+						setValue('city_id', getValues('city_id'));
+					});
+				});
+			}else{
+				document.getElementById('form-register').reset();
+			}
+		});
+		
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id])
 
+	
 	return (
 
 		<>
@@ -182,7 +193,7 @@ const RegisterEdit = () => {
 
 						<Form onSubmit={handleSubmit(onSubmit)} className="form-register" id="form-register">
 							<Row className="mb-3">
-								<Col sm="4">
+								<Col sm="3">
 									<Form.Group>
 										<label htmlFor="title" className="form-label">Titulo:<span className="req-span">*</span></label>
 										<input type="text" name="title" className="form-control" id="title" {...register("title")} />
@@ -190,7 +201,7 @@ const RegisterEdit = () => {
 									</Form.Group>
 								</Col>
 
-								<Col sm="4">
+								<Col sm="3">
 									<Form.Group>
 										<label htmlFor="type_residence" className="form-label">Tipo da casa:</label>
 										<select className="form-select" id="type_residence" name="type_residence" {...register("type_residence")}>
@@ -201,12 +212,13 @@ const RegisterEdit = () => {
 											<option value="chacara">Chacara</option>
 											<option value="quarto">Quarto</option>
 											<option value="kitnet">Kitnet</option>
+											<option value="terreno">Terreno</option>
 										</select>
 										<span className="error-message">{errors?.type_residence ? errors.type_residence[0] : null}</span>
 									</Form.Group>
 								</Col>
 
-								<Col sm="4">
+								<Col sm="3">
 									<Form.Group>
 										<label htmlFor="type_payment" className="form-label">Tipo de pagamento:</label>
 										<select className="form-select" id="type_payment" name="type_payment" {...register("type_payment")}>
@@ -215,6 +227,14 @@ const RegisterEdit = () => {
 											<option value="venda">Venda</option>
 										</select>
 										<span className="error-message">{errors?.type_payment ? errors.type_payment[0] : null}</span>
+									</Form.Group>
+								</Col>
+
+								<Col sm="3">
+									<Form.Group>
+										<label htmlFor="area" className="form-label">Área em M<sup>2</sup>:<span className="req-span">*</span></label>
+										<NumericFormat displayType="input" name="area" className="form-control" id="area" value={getValues('area')} onChange={(e) => setValue("area", e.target.value)} />
+										<span className="error-message">{errors?.area ? errors.area[0] : null}</span>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -271,7 +291,7 @@ const RegisterEdit = () => {
 								<Col sm="2">
 									<Form.Group>
 										<label htmlFor="number" className="form-label">Nº:</label>
-										<input type="text" name="number" maxlength="6" className="form-control" id="number" {...register("number")} />
+										<input type="text" name="number" maxLength="6" className="form-control" id="number" {...register("number")} />
 										<span className="error-message">{errors?.number ? errors.number[0] : null}</span>
 									</Form.Group>
 								</Col>
@@ -290,8 +310,8 @@ const RegisterEdit = () => {
 							<Row className="mb-3">
 								<Col sm="3">
 									<label htmlFor="price" className="form-label">Preço:<span className="req-span">*</span></label>
-									<div class="input-group">
-										<span class="input-group-text">R$</span>
+									<div className="input-group">
+										<span className="input-group-text">R$</span>
 										<NumericFormat
 											value={getValues('price')}
 											name="price"
@@ -309,8 +329,8 @@ const RegisterEdit = () => {
 
 								<Col sm="3">
 									<label htmlFor="iptu_price" className="form-label">Preço do IPTU:<span className="req-span">*</span></label>
-									<div class="input-group">
-										<span class="input-group-text">R$</span>
+									<div className="input-group">
+										<span className="input-group-text">R$</span>
 										<NumericFormat
 											value={getValues('iptu_price')}
 											name="iptu_price"
@@ -328,8 +348,8 @@ const RegisterEdit = () => {
 
 								<Col sm="3">
 									<label htmlFor="condominium_price" className="form-label">Preço do condomínio:<span className="req-span">*</span></label>
-									<div class="input-group">
-										<span class="input-group-text">R$</span>
+									<div className="input-group">
+										<span className="input-group-text">R$</span>
 										<NumericFormat
 											value={getValues('condominium_price')}
 											name="condominium_price"
@@ -385,7 +405,7 @@ const RegisterEdit = () => {
 								<Col sm="3">
 									<Form.Group>
 										<label htmlFor="installments_max" className="form-label">Quantidade máxima de parcelas:<span className="req-span">*</span></label>
-										<NumericFormat displayType="input" name="installments_max" className="form-control" id="installments_max" onChange={(e) => setValue("installments_max", e.target.value)} />
+										<NumericFormat displayType="input" name="installments_max" className="form-control" id="installments_max" value={getValues('installments_max')} onChange={(e) => setValue("installments_max", e.target.value)} />
 										<span className="error-message">{errors?.installments_max ? errors.installments_max[0] : null}</span>
 									</Form.Group>
 								</Col>
@@ -393,7 +413,7 @@ const RegisterEdit = () => {
 								<Col sm="3">
 									<Form.Group>
 										<label htmlFor="quantity_pool" className="form-label">Quantidade de piscinas:<span className="req-span">*</span></label>
-										<NumericFormat displayType="input" name="quantity_pool" className="form-control" id="quantity_pool" onChange={(e) => setValue("quantity_pool", e.target.value)} />
+										<NumericFormat displayType="input" name="quantity_pool" className="form-control" id="quantity_pool" value={getValues('quantity_pool')} onChange={(e) => setValue("quantity_pool", e.target.value)} />
 										<span className="error-message">{errors?.quantity_pool ? errors.quantity_pool[0] : null}</span>
 									</Form.Group>
 								</Col>
@@ -401,7 +421,7 @@ const RegisterEdit = () => {
 								<Col sm="3">
 									<Form.Group>
 										<label htmlFor="quantity_bedroom" className="form-label">Quantidade de quartos:<span className="req-span">*</span></label>
-										<NumericFormat displayType="input" name="quantity_bedroom" className="form-control" id="quantity_bedroom" onChange={(e) => setValue("quantity_bedroom", e.target.value)} />
+										<NumericFormat displayType="input" name="quantity_bedroom" className="form-control" id="quantity_bedroom" value={getValues('quantity_bedroom')} onChange={(e) => setValue("quantity_bedroom", e.target.value)} />
 										<span className="error-message">{errors?.quantity_bedroom ? errors.quantity_bedroom[0] : null}</span>
 									</Form.Group>
 								</Col>
@@ -409,7 +429,7 @@ const RegisterEdit = () => {
 								<Col sm="3">
 									<Form.Group>
 										<label htmlFor="quantity_bathrooms" className="form-label">Quantidade de banheiros:<span className="req-span">*</span></label>
-										<NumericFormat displayType="input" name="quantity_bathrooms" className="form-control" id="quantity_bathrooms" onChange={(e) => setValue("quantity_bathrooms", e.target.value)} />
+										<NumericFormat displayType="input" name="quantity_bathrooms" className="form-control" id="quantity_bathrooms" value={getValues('quantity_bathrooms')} onChange={(e) => setValue("quantity_bathrooms", e.target.value)} />
 										<span className="error-message">{errors?.quantity_bathrooms ? errors.quantity_bathrooms[0] : null}</span>
 									</Form.Group>
 								</Col>
@@ -419,7 +439,7 @@ const RegisterEdit = () => {
 								<Col sm="3">
 									<Form.Group>
 										<label htmlFor="quantity_suites" className="form-label">Quantidade de suítes:<span className="req-span">*</span></label>
-										<NumericFormat displayType="input" name="quantity_suites" className="form-control" id="quantity_suites" onChange={(e) => setValue("quantity_suites", e.target.value)} />
+										<NumericFormat displayType="input" name="quantity_suites" className="form-control" id="quantity_suites" value={getValues('quantity_suites')} onChange={(e) => setValue("quantity_suites", e.target.value)} />
 										<span className="error-message">{errors?.quantity_suites ? errors.quantity_suites[0] : null}</span>
 									</Form.Group>
 								</Col>
@@ -427,7 +447,7 @@ const RegisterEdit = () => {
 								<Col sm="3">
 									<Form.Group>
 										<label htmlFor="quantity_garage" className="form-label">Quantidade de garagens:<span className="req-span">*</span></label>
-										<NumericFormat displayType="input" name="quantity_garage" className="form-control" id="quantity_garage" onChange={(e) => setValue("quantity_garage", e.target.value)} />
+										<NumericFormat displayType="input" name="quantity_garage" className="form-control" id="quantity_garage" value={getValues('quantity_garage')} onChange={(e) => setValue("quantity_garage", e.target.value)} />
 										<span className="error-message">{errors?.quantity_garage ? errors.quantity_garage[0] : null}</span>
 									</Form.Group>
 								</Col>
@@ -456,7 +476,7 @@ const RegisterEdit = () => {
 									</Form.Group>
 								</Col>
 							</Row>
-
+							
 							<Row className="mb-3">
 								<Col sm="3">
 									<Form.Group>
@@ -528,6 +548,7 @@ const RegisterEdit = () => {
 									</Form.Group>
 								</Col>
 							</Row>
+							
 
 							<Row className="mb-3">
 								<Col sm="12">

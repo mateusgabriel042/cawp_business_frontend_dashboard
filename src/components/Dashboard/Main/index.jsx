@@ -26,7 +26,15 @@ import PropertiesViewHouse from '../../../pages/Dashboard/DashboardProperties/Ho
 
 import PropertiesListHotel from '../../../pages/Dashboard/DashboardProperties/Hotel/List/index.jsx';
 import PropertiesRegisterEditHotel from '../../../pages/Dashboard/DashboardProperties/Hotel/RegisterEdit/index.jsx';
+import PropertiesViewHotel from '../../../pages/Dashboard/DashboardProperties/Hotel/View/index.jsx';
 
+import PropertiesListVehicle from '../../../pages/Dashboard/DashboardProperties/Vehicle/List/index.jsx';
+import PropertiesRegisterEditVehicle from '../../../pages/Dashboard/DashboardProperties/Vehicle/RegisterEdit/index.jsx';
+import PropertiesViewVehicle from '../../../pages/Dashboard/DashboardProperties/Vehicle/View/index.jsx';
+
+import PropertiesListUtensil from '../../../pages/Dashboard/DashboardProperties/Utensil/List/index.jsx';
+import PropertiesRegisterEditUtensil from '../../../pages/Dashboard/DashboardProperties/Utensil/RegisterEdit/index.jsx';
+import PropertiesViewUtensil from '../../../pages/Dashboard/DashboardProperties/Utensil/View/index.jsx';
 
 import OverviewDashboardJobs from '../../../pages/Dashboard/DashboardJobs/Overview/index.jsx';
 
@@ -76,6 +84,20 @@ const Main = () => {
 							<PrivateRoute path="/dashboard/properties/hotel/list" component={PropertiesListHotel} />
 							<PrivateRoute path="/dashboard/properties/hotel/register" component={PropertiesRegisterEditHotel} />
 							<PrivateRoute path="/dashboard/properties/hotel/edit/:id" component={PropertiesRegisterEditHotel} />
+							<PrivateRoute path="/dashboard/properties/hotel/view/:id" component={PropertiesViewHotel} />
+							<PrivateRoute path="/dashboard/properties/hotel/search/:column/:value" component={PropertiesListHotel} />
+
+							<PrivateRoute path="/dashboard/properties/vehicle/list" component={PropertiesListVehicle} />
+							<PrivateRoute path="/dashboard/properties/vehicle/register" component={PropertiesRegisterEditVehicle} />
+							<PrivateRoute path="/dashboard/properties/vehicle/edit/:id" component={PropertiesRegisterEditVehicle} />
+							<PrivateRoute path="/dashboard/properties/vehicle/view/:id" component={PropertiesViewVehicle} />
+							<PrivateRoute path="/dashboard/properties/vehicle/search/:column/:value" component={PropertiesListVehicle} />
+
+							<PrivateRoute path="/dashboard/properties/utensil/list" component={PropertiesListUtensil} />
+							<PrivateRoute path="/dashboard/properties/utensil/register" component={PropertiesRegisterEditUtensil} />
+							<PrivateRoute path="/dashboard/properties/utensil/edit/:id" component={PropertiesRegisterEditUtensil} />
+							<PrivateRoute path="/dashboard/properties/utensil/view/:id" component={PropertiesViewUtensil} />
+							<PrivateRoute path="/dashboard/properties/utensil/search/:column/:value" component={PropertiesListUtensil} />
 			    			
 
 

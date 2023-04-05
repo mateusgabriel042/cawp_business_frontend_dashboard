@@ -16,8 +16,8 @@ const List = () => {
 	
 	const [endpointRegisters, setEndpointRegisters] = useState([]);
 	const system = 'properties';
-    const endpoint = 'hotel';
-    const roleEndpoint = 'properties-hotel';
+    const endpoint = 'vehicle';
+    const roleEndpoint = 'properties-vehicle';
 	const [loading, setLoading] = useState(false);
 	const [offset, setOffset] = useState(1);
 	const [qtdPages, setQtdPages] = useState(1);
@@ -99,6 +99,8 @@ const List = () => {
 												<th>Titulo</th>
 												<th>Cidade</th>
 												<th>Estado</th>
+												<th>Ano</th>
+												<th>Tipo</th>
 												<th>Check-in</th>
 												<th>Check-out</th>
 												<th>Preço da diária</th>
@@ -111,6 +113,8 @@ const List = () => {
 													<td>{item?.title || '-'}</td>
 													<td>{item?.city || '-'}</td>
 													<td>{item?.state || '-'}</td>
+													<td>{item?.year_veicle || '-'}</td>
+													<td>{item?.type_veicle || '-'}</td>
 													<td>{item?.check_in || '-'}</td>
 													<td>{item?.check_out || '-'}</td>
 													<td>{formatMoney(item?.daily_price, 'pt-BR', 'BRL')}</td>
